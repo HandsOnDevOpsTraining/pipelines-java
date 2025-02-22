@@ -10,7 +10,7 @@ trigger:
 - release-2025
 
 pool:
-  vmImage: windows-latest
+  vmImage: ubuntu-latest
 
 steps:
 - task: Maven@3
