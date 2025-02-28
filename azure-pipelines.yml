@@ -13,7 +13,17 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: |
-    echo Starting the build
-    mvn package
-  displayName: 'Build with Maven'
+
+- task: SonarQubePrepare@7
+  inputs:
+    SonarQube: 'SonarQube'
+    scannerMode: 'other'
+    extraProperties: 'sonar.projectKey=Feb2025-Java-Maven-Yaml-Pipeline_Feb2025-Java-Maven-Yaml-Pipeline_32e41e31-8640-4752-8e77-11899db67430'
+
+- task: Maven@4
+  inputs:
+    sonarQubeRunAnalysis: true
+
+- task: SonarQubePublish@7
+  inputs:
+    pollingTimeoutSec: '300'
