@@ -26,7 +26,6 @@ steps:
 
 - task: Maven@4
   inputs:
-    azureSubscription: 'Azure subscription 1(0837fc27-ed98-4cfb-821a-ce2251dc474a)'
     mavenPomFile: 'pom.xml'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
@@ -36,7 +35,6 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: true
     sqMavenPluginVersionChoice: 'latest'
-
 - task: SonarQubePublish@7
   inputs:
     pollingTimeoutSec: '300'
