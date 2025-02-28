@@ -12,29 +12,35 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  mavenPOMFile: 'pom.xml'
 steps:
 
 - task: SonarQubePrepare@7
   inputs:
     SonarQube: 'SonarQube'
     scannerMode: 'other'
-    extraProperties: 'sonar.projectKey=Feb2025-Java-Maven-Yaml-Pipeline_Feb2025-Java-Maven-Yaml-Pipeline_32e41e31-8640-4752-8e77-11899db67430'
+    extraProperties: |
+      sonar.projectKey=Feb2025-Java-Maven-CI-Using-UI-Approach_java-unit-tests-maven.git_ea6ab8e4-bee6-409b-9a11-1594bd8957e0
+      sonar.projectName=java-unit-tests-maven.git
 
 # - task: Maven@4
 #   inputs:
 #     sonarQubeRunAnalysis: true
 
-- task: Maven@4
+- task: JavaToolInstaller@1
+  displayName: 'Use Java 17'
   inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
+    versionSpec: 17
+    jdkArchitectureOption: x64
+    jdkSourceOption: PreInstalled
+
+- task: Maven@3
+  displayName: 'Maven pom.xml'
+  inputs:
+    mavenPomFile: '$(Parameters.mavenPOMFile)'
     sonarQubeRunAnalysis: true
-    sqMavenPluginVersionChoice: 'latest'
+
 - task: SonarQubePublish@7
   inputs:
     pollingTimeoutSec: '300'
