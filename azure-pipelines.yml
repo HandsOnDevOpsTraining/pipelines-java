@@ -20,9 +20,22 @@ steps:
     scannerMode: 'other'
     extraProperties: 'sonar.projectKey=Feb2025-Java-Maven-Yaml-Pipeline_Feb2025-Java-Maven-Yaml-Pipeline_32e41e31-8640-4752-8e77-11899db67430'
 
+# - task: Maven@4
+#   inputs:
+#     sonarQubeRunAnalysis: true
+
 - task: Maven@4
   inputs:
+    azureSubscription: 'Azure subscription 1(0837fc27-ed98-4cfb-821a-ce2251dc474a)'
+    mavenPomFile: 'pom.xml'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
     sonarQubeRunAnalysis: true
+    sqMavenPluginVersionChoice: 'latest'
 
 - task: SonarQubePublish@7
   inputs:
